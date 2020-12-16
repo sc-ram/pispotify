@@ -1,0 +1,43 @@
+---
+- name:   Switch Audio Output to USB
+  become: True
+  replace:
+    path:    /usr/share/alsa/alsa.conf
+    regexp:  '(?<=defaults\..{3}\.card\s)(0)'
+    replace: '1'
+    backup:  Yes
+
+- name:   Enable high quality streaming
+  become: True
+  replace:
+    path:    /etc/default/raspotify
+    regexp:  '(?<=BITRATE=\")(\d*)'
+    replace: "{{ spotify_client.bitrate }}"
+
+- name:   Change Client name
+  become: True
+  replace:
+    path:    /etc/default/raspotify
+    regexp:  '(?<=DEVICE_NAME=\")([A-Za-z]*)'
+    replace: "{{ spotify_client.name }}"
+
+- name:   Change Username
+  become: True
+  replace:
+    path:    /etc/default/raspotify
+    regexp:  '(?<=OPTIONS\=\"--username\W)([A-Za-z]*)'
+    replace: "{{ spotify_client.username }}"
+
+- name:   Change Password
+  become: True
+  replace:
+    path:    /etc/default/raspotify
+    regexp:  '(?<=\W--password\W)([A-Za-z]*)'
+    replace: "{{ spotify_client.password }}"
+
+- name:   Restart Raspotify
+  become: True
+  systemd:
+    name:          raspotify
+    daemon_reload: yes
+    state:         restarted

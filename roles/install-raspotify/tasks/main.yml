@@ -1,0 +1,26 @@
+---
+- name:   Ensure required packages are installed
+  become: True
+  apt:
+    pkg:
+      - curl
+      - apt-transport-https
+
+- name:   Add raspotify repository key
+  become: True
+  apt_key:
+    url: https://dtcooper.github.io/raspotify/key.asc
+    state: present
+
+- name:   Add raspotify repository into sources list
+  become: True
+  apt_repository:
+    repo: deb https://dtcooper.github.io/raspotify raspotify main
+    state: present
+
+- name:   Install Raspotify
+  become: True
+  apt:
+    update_cache: Yes
+    pkg:
+      - raspotify

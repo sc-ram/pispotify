@@ -1,0 +1,13 @@
+---
+- hosts: spotify
+  roles:
+    - update-packages
+    - install-raspotify
+    - configure-raspotify
+
+  vars:
+    - spotify_client:
+        name:      Nubi
+        bitrate:   320
+        username:  user
+        password:  pw

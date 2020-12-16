@@ -1,0 +1,6 @@
+[spotify]
+192.168.0.52
+
+[spotify:vars]
+ansible_user=pi
+ansible_python_interpreter=/usr/bin/python3
