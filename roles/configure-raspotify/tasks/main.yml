@@ -7,33 +7,26 @@
     replace: '1'
     backup:  Yes
 
-- name:   Enable high quality streaming
+- name:   Update streaming bitrate
   become: True
   replace:
     path:    /etc/default/raspotify
-    regexp:  '(?<=BITRATE=\")(\d*)'
-    replace: "{{ spotify_client.bitrate }}"
+    regexp:  '.?BITRATE=.*'
+    replace: "BITRATE=\"{{ spotify_client.bitrate }}\""
 
 - name:   Change Client name
   become: True
   replace:
     path:    /etc/default/raspotify
-    regexp:  '(?<=DEVICE_NAME=\")([A-Za-z]*)'
-    replace: "{{ spotify_client.name }}"
+    regexp:  '.?DEVICE_NAME=.*'
+    replace: "DEVICE_NAME=\"{{ spotify_client.name }}\""
 
-- name:   Change Username
+- name:   Change Spotify Credentials
   become: True
   replace:
     path:    /etc/default/raspotify
-    regexp:  '(?<=OPTIONS\=\"--username\W)([A-Za-z]*)'
-    replace: "{{ spotify_client.username }}"
-
-- name:   Change Password
-  become: True
-  replace:
-    path:    /etc/default/raspotify
-    regexp:  '(?<=\W--password\W)([A-Za-z]*)'
-    replace: "{{ spotify_client.password }}"
+    regexp:  '.?OPTIONS=.*'
+    replace: "OPTIONS=\"--username {{ spotify_client.username }} --password {{ spotify_client.password }}\""
 
 - name:   Restart Raspotify
   become: True
