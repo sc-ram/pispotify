@@ -7,5 +7,8 @@ Setup will install raspotify and then configure it to use USB card instead of au
 - Update configuration options like Spotify credentials in main.yml
 - Run the following command:
 ```ansible-playbook main.yml -i inventory -k```
-  
-- Enter the SSH PW when prompted
+- Enter the SSH PW when prompted or set up ssh keys.
+
+## Acknowledgements
+
+This project is based on [raspotify](https://github.com/dtcooper/raspotify)
