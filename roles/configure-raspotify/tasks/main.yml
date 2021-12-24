@@ -10,23 +10,30 @@
 - name:   Update streaming bitrate
   become: True
   replace:
-    path:    /etc/default/raspotify
-    regexp:  '.?BITRATE=.*'
-    replace: "BITRATE=\"{{ spotify_client.bitrate }}\""
+    path:    /etc/raspotify/conf
+    regexp:  '.?LIBRESPOT_BITRATE=.*'
+    replace: "LIBRESPOT_BITRATE=\"{{ spotify_client.bitrate }}\""
 
 - name:   Change Client name
   become: True
   replace:
-    path:    /etc/default/raspotify
-    regexp:  '.?DEVICE_NAME=.*'
-    replace: "DEVICE_NAME=\"{{ spotify_client.name }}\""
+    path:    /etc/raspotify/conf
+    regexp:  '.?LIBRESPOT_NAME=.*'
+    replace: "LIBRESPOT_NAME=\"{{ spotify_client.name }}\""
 
-- name:   Change Spotify Credentials
+- name:   Change Username
   become: True
   replace:
-    path:    /etc/default/raspotify
-    regexp:  '.?OPTIONS=.*'
-    replace: "OPTIONS=\"--username {{ spotify_client.username }} --password {{ spotify_client.password }}\""
+    path:    /etc/raspotify/conf
+    regexp:  '.?LIBRESPOT_USERNAME=.*'
+    replace: "LIBRESPOT_USERNAME=\"{{ spotify_client.username }}\""
+
+- name:   Change Password
+  become: True
+  replace:
+    path:    /etc/raspotify/conf
+    regexp:  '.?LIBRESPOT_PASSWORD=.*'
+    replace: "LIBRESPOT_PASSWORD=\"{{ spotify_client.password }}\""
 
 - name:   Restart Raspotify
   become: True
